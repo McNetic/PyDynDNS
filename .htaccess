@@ -1,0 +1,22 @@
+Require all granted
+<FilesMatch "(COPYING|\.py|\.md)">
+	Require all denied
+</FilesMatch>
+<FilesMatch "index.py">
+        Require all granted
+</FilesMatch>
+
+Options +ExecCGI
+AddHandler cgi-script .py
+DirectoryIndex index.py
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} !^/favicon.ico$
+	RewriteCond %{REQUEST_URI} !^(/.*)+index.py/
+	RewriteRule ^(.*)$ index.py/$1 [PT]
+</IfModule>
+

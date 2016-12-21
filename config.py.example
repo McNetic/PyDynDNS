@@ -1,0 +1,27 @@
+debug = True
+
+domains = {
+  'my.domain' : ( # domain fqdn (fixed part of dynamic fqdn)
+    'my.domain.', # origin
+    'ns.my.domain', # nameserver
+    'ddns_update_key', # key name
+    '<key>', # key
+    'HMAC_MD5' # key algorithm
+  )
+}
+
+# password is a SHA-256 and can be generated like this:
+# mkpasswd -m SHA-256
+users = {
+  'username1' : {
+    'password' : '<sha-256 of password>',
+    'hosts' : (
+      'host1.my.domain',
+      'host2.my.domain'
+    )
+  },
+  'username2' : {
+    # ...
+  }
+}
+
